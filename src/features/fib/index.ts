@@ -1,4 +1,4 @@
-const fibonacci = (n: number): BigInt => {
+export const fibonacci = (n: number): BigInt => {
     if (n <= 1) return BigInt(n);
     let a = 0n, b = 1n, temp;
     for (let i = 2; i <= n; i++) {

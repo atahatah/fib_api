@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fibonacci } from "@/features/fib/index";
 
 export function GET(request: NextRequest): NextResponse {
   const params = request.nextUrl.searchParams;
