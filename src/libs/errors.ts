@@ -13,3 +13,11 @@ export class TooLargeError extends Error {
         this.number = number;
     }
 }
+
+export class NotIntegerError extends Error {
+    number: number;
+    constructor(number: number) {
+        super(`The number is not an integer`);
+        this.number = number;
+    }
+}

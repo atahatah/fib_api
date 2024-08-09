@@ -1,5 +1,5 @@
 import { fibonacci } from "../../src/features/fib/index";
-import { OutOfRangeError, TooLargeError } from "../../src/libs/errors";
+import { NotIntegerError, OutOfRangeError, TooLargeError } from "../../src/libs/errors";
 
 describe("fibonacci", () => {
     test("最初の要素は1", () => {
@@ -55,5 +55,11 @@ describe("fibonacci", () => {
     });
     test("入力15425は大きすぎる", () => {
         expect(() => fibonacci(15425)).toThrow(TooLargeError);
+    });
+    test("小数である入力1.5はエラー", () => {
+        expect(() => fibonacci(1.5)).toThrow(NotIntegerError);
+    });
+    test("小数である入力-10.23はエラー", () => {
+        expect(() => fibonacci(-10.23)).toThrow(NotIntegerError);
     });
 });

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fibonacci } from "@/features/fib/index";
-import { OutOfRangeError, TooLargeError } from "@/libs/errors";
+import { NotIntegerError, OutOfRangeError, TooLargeError } from "@/libs/errors";
 
 export function GET(request: NextRequest): NextResponse {
   const params = request.nextUrl.searchParams;
@@ -10,9 +10,6 @@ export function GET(request: NextRequest): NextResponse {
     return NextResponse.json({ "error": "Query parameter 'n' is required" }, { status: 400 });
   }
   const n = Number(query);
-  if (Number.isInteger(n) === false) {
-    return NextResponse.json({ "error": "Query parameter 'n' should be an integer" }, { status: 400 });
-  }
 
   try {
     // BigIntはJSONに変換できないので、文字列に変換して返す
@@ -22,6 +19,8 @@ export function GET(request: NextRequest): NextResponse {
     if (e instanceof OutOfRangeError) {
       return NextResponse.json({ "error": e.message }, { status: 400 });
     } else if (e instanceof TooLargeError) {
+      return NextResponse.json({ "error": e.message }, { status: 400 });
+    } else if (e instanceof NotIntegerError) {
       return NextResponse.json({ "error": e.message }, { status: 400 });
     } else if (e instanceof Error) {
       return NextResponse.json({ "error": `Internal Server Error : ${e.message}` }, { status: 500 });
