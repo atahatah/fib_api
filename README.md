@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![CI](https://github.com/atahatah/fib_api/actions/workflows/mail.yml/badge.svg)](https://github.com/atahatah/fib_api/actions/workflows/mail.yml)
 
-## Getting Started
+# FIB_API
+n番目のフィボナッチ数列を返すAPIです。
 
-First, run the development server:
+## 仕様
+### 技術スタック
+- Next.js
+- TypeScript
+### テスト
+`Jest`を用いてユニットテストを作成しています。
+### TODO: エラーハンドリング
+### 公開
+Vercelを用いて公開しており、https://fib-api-pearl.vercel.app/fib?n=99 のように利用することが可能です。
 
-```bash
+## 実行方法
+### ローカルサーバの起動
+まずはローカルにクローンします。
+```sh
+git clone git@github.com:atahatah/fib_api.git
+```
+次に依存するパッケージをインストールしますが、`Node.js`のバージョン管理に`asdf`を用いている場合、`Node.js`のバージョンも合わせることができます。
+```sh
+cd fib_api
+npm install
+```
+最後に次のコマンドでローカルでサーバーを起動することができます。
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+### 利用方法
+以下はVercelを用いた場合のAPIの利用方法を記述します。ローカルサーバを用いる場合は、`https://fib-api-pearl.vercel.app`を適宜読み替えてください。
+
+フィボナッチ数列を受け取るAPIは`GET`メソッドを用い、パスが`/fib`で、要素の番号の指定を`n`というパラメーターを用いて行います。ただし、`n>=1`としてください。例えば、次のように利用することができます。
+```
+https://fib-api-pearl.vercel.app/fib?n=99 
+```
+この例の場合、次のようなレスポンスが期待されます。
+```
+{"result": 218922995834555169026}
+```
+`curl`コマンドを用いる場合は次のように利用できます。
+```sh
+curl -X GET -H "Content-Type: application/json" "https://fib-api-pearl.vercel.app/fib?n=99"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## ソースコードの構成
+- `__tests__` ユニットテスト
+- `.github/workflows` CI
+- `src` プログラム
+  - `app` APIハンドル
+    - `fib` フィボナッチ数列のAPI
+  - `features` それぞれの機能ごとの実装
+    - `fib` フィボナッチ数列の実際の処理
+  - `libs` ライブラリに関連するプログラム
+    - `errors.ts` エラー定義
