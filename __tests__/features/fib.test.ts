@@ -1,5 +1,5 @@
 import { fibonacci } from "../../src/features/fib/index";
-import { OutOfRangeError } from "../../src/libs/errors";
+import { OutOfRangeError, TooLargeError } from "../../src/libs/errors";
 
 describe("fibonacci", () => {
     test("最初の要素は1", () => {
@@ -38,6 +38,9 @@ describe("fibonacci", () => {
     test("99番目の要素", () => {
         expect(fibonacci(99)).toBe(218922995834555169026n);
     });
+    test("500番目の要素", () => {
+        expect(fibonacci(500)).toBe(139423224561697880139724382870407283950070256587697307264108962948325571622863290691557658876222521294125n);
+    });
     test("入力0はエラー", () => {
         expect(() => fibonacci(0)).toThrow(OutOfRangeError);
     });
@@ -46,5 +49,11 @@ describe("fibonacci", () => {
     });
     test("入力-100はエラー", () => {
         expect(() => fibonacci(-100)).toThrow(OutOfRangeError);
+    });
+    test("入力501は大きすぎる", () => {
+        expect(() => fibonacci(501)).toThrow(TooLargeError);
+    });
+    test("入力15425は大きすぎる", () => {
+        expect(() => fibonacci(15425)).toThrow(TooLargeError);
     });
 });
