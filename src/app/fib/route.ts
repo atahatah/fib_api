@@ -17,11 +17,11 @@ export function GET(request: NextRequest): NextResponse {
     return new NextResponse(`{"result": ${result}}`, { headers: { "Content-Type": "application/json" } });
   } catch (e) {
     if (e instanceof OutOfRangeError) {
-      return NextResponse.json({ "error": e.message }, { status: 400 });
+      return NextResponse.json({ "error": e.message }, { status: 422 });
     } else if (e instanceof TooLargeError) {
-      return NextResponse.json({ "error": e.message }, { status: 400 });
+      return NextResponse.json({ "error": e.message }, { status: 422 });
     } else if (e instanceof NotIntegerError) {
-      return NextResponse.json({ "error": e.message }, { status: 400 });
+      return NextResponse.json({ "error": e.message }, { status: 422 });
     } else if (e instanceof Error) {
       return NextResponse.json({ "error": `Internal Server Error : ${e.message}` }, { status: 500 });
     }
